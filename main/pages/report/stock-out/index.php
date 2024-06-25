@@ -1,0 +1,1 @@
+<h1 class="font-semibold text-[#1d1d1d]">Stock Out Report</h1>
