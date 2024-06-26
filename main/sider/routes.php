@@ -72,5 +72,8 @@ $pages = array(
     'default' => 'pages/manage-user/index.php',
     'add' => 'pages/manage-user/add.php',
     'edit' => 'pages/manage-user/edit.php'
-  )
+  ),
+  'logout' => array(
+    'default' => 'pages/logout.php'
+  ),
 );

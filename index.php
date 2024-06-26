@@ -1,3 +1,16 @@
+<?php 
+require "./db/config.php";
+require "./utilities/func/auth.php";
+
+if (isset($_SESSION['username'])) {
+    header("Location: main/?page=dashboard");
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    login($_POST['username'], $_POST['password']);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 

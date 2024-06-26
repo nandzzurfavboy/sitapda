@@ -53,7 +53,7 @@
           <span> Budi </span>
         </p>
       </div>
-      <a href="" class="flex items-center hover:bg-[#2d2d2d] p-2 rounded-lg">
+      <a href="?page=logout" class="flex items-center hover:bg-[#2d2d2d] p-2 rounded-lg">
         <i class="text-[1.1rem] bx bx-exit text-red-600"></i>
       </a>
     </div>
