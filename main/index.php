@@ -1,9 +1,11 @@
 <?php require "../db/config.php" ?>
 <?php require './sider/routes.php' ?>
 <?php require '../components/table/simple-table.php' ?>
+<?php require '../components/table/table.php' ?>
 <?php require '../components/typography/head-title.php' ?>
 <?php require '../utilities/func/auth.php' ?>
 <?php require '../utilities/func/query.php' ?>
+<?php require '../utilities/func/wa-send.php' ?>
 
 <?php
 if (!isset($_SESSION['username'])) {
@@ -32,10 +34,9 @@ if (!isset($_SESSION['username'])) {
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
   <script>
-    // new DataTable('#datatable-style');
-    $('#datatable-style').DataTable( {
-    responsive: true
-} );
+    $('#datatable-style').DataTable({
+      responsive: true
+    });
   </script>
 </body>
 

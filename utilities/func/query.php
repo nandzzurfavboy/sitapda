@@ -71,47 +71,51 @@ function createData($table, $data)
 
 function updateData($table, $data, $condition)
 {
-  global $conn;
+    global $conn;
 
-  $table = mysqli_real_escape_string($conn, $table);
+    $table = mysqli_real_escape_string($conn, $table);
 
-  $escapedData = array();
-  foreach ($data as $column => $value) {
-    $escapedColumn = mysqli_real_escape_string($conn, $column);
-    $escapedValue = mysqli_real_escape_string($conn, $value);
-    $escapedData[] = "$escapedColumn = '$escapedValue'";
-  }
+    $escapedData = array();
+    foreach ($data as $column => $value) {
+        $escapedColumn = mysqli_real_escape_string($conn, $column);
+        $escapedValue = mysqli_real_escape_string($conn, $value);
+        $escapedData[] = "$escapedColumn = '$escapedValue'";
+    }
 
-  $setClause = implode(", ", $escapedData);
-  $query = "UPDATE $table SET $setClause WHERE $condition";
+    $setClause = implode(", ", $escapedData);
+    $query = "UPDATE $table SET $setClause WHERE $condition";
 
-  $statement = mysqli_prepare($conn, $query);
-  mysqli_stmt_execute($statement);
+    $statement = mysqli_prepare($conn, $query);
+    if (!$statement) {
+        die("Error preparing statement: " . mysqli_error($conn));
+    }
 
-  if (mysqli_stmt_errno($statement)) {
-    die("Error: " . mysqli_stmt_error($statement));
-  }
+    $executeResult = mysqli_stmt_execute($statement);
+    mysqli_stmt_close($statement);
 
-  mysqli_stmt_close($statement);
+    return $executeResult;
 }
+
 
 function deleteData($table, $condition)
 {
-  global $conn;
+    global $conn;
 
-  $table = mysqli_real_escape_string($conn, $table);
+    $table = mysqli_real_escape_string($conn, $table);
 
-  $query = "DELETE FROM $table WHERE $condition";
+    $query = "DELETE FROM $table WHERE $condition";
 
-  $statement = mysqli_prepare($conn, $query);
-  mysqli_stmt_execute($statement);
+    $statement = mysqli_prepare($conn, $query);
+    if (!$statement) {
+        die("Error preparing statement: " . mysqli_error($conn));
+    }
 
-  if (mysqli_stmt_errno($statement)) {
-    die("Error: " . mysqli_stmt_error($statement));
-  }
+    $executeResult = mysqli_stmt_execute($statement);
+    mysqli_stmt_close($statement);
 
-  mysqli_stmt_close($statement);
+    return $executeResult; // Mengembalikan true jika sukses, false jika gagal
 }
+
 
 function countData($table)
 {

@@ -1,8 +1,9 @@
 <?php
-function baseTable($data, $columns, $get_url)
+
+function customTable($data, $columns, $get_url, $Actions = [])
 {
     if (empty($data)) {
-        return '<p>No data available.</p>';
+        return null;
     }
 
     $html = '<div class="overflow-x-auto">';
@@ -25,21 +26,21 @@ function baseTable($data, $columns, $get_url)
         foreach ($columns as $key => $column) {
             $value = isset($row[$key]) ? $row[$key] : '';
             
-            if ($key == 'price' || $key == 'payment_amount') {
+            if ($key == 'price' || $key == 'payment_amount' || $key =='payment_change') {
                 $value = toIdr($value);
             }
             $html .= '<td class="whitespace-nowrap px-4 py-2 text-gray-700">' . $value . '</td>';
         }
         $html .= '<td class="whitespace-nowrap px-4 py-2 text-gray-700">
-                    <div class="flex justify-center items-center gap-2">
-                    <a href="?page='. $get_url .'&act=edit&id=' . $row['id'] . '" class="rounded-lg px-2 py-1 bg-blue-50 border hover:bg-blue-100 transition-all">
-                        <i class="bx bxs-pencil text-blue-500"></i>
-                    </a>
-                    <a href="?page='. $get_url .'&act=delete&id=' . $row['id'] . '" class="rounded-lg px-2 py-1 bg-red-50 border hover:bg-red-100 transition-all" onclick="return confirm(\'Apakah anda yakin ingin menghapus ini?\')">
-                        <i class="bx bxs-trash text-red-500"></i>
-                    </a>
-                    </div>
-                  </td>';
+                    <div class="flex justify-center items-center gap-2">';
+        foreach ($Actions as $action) {
+            $actionUrl = str_replace(['{id}'], [$row['id']], $action['url']);
+            $html .= '<a href="' . $actionUrl . '" class="rounded-lg px-2 py-1 ' . $action['bgColor'] . ' border hover:' . $action['hoverColor'] . ' transition-all" onclick="' . $action['onclick'] . '">
+                        <i class="' . $action['icon'] . ' ' . $action['iconColor'] . '"></i>
+                      </a>';
+        }
+
+        $html .= '</div></td>';
         $html .= '</tr>';
         $number++;
     }
@@ -49,3 +50,14 @@ function baseTable($data, $columns, $get_url)
 
     return $html;
 }
+
+// $extraActions = [
+//     [
+//         'url' => '?page={get_url}&act=view&id={id}',
+//         'bgColor' => 'bg-green-50',
+//         'hoverColor' => 'bg-green-100',
+//         'icon' => 'bx bx-show',
+//         'iconColor' => 'text-green-500',
+//         'onclick' => ''  // JavaScript function if needed
+//     ]
+// ];
