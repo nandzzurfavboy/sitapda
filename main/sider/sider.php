@@ -50,10 +50,10 @@
         <img alt="" src="https://placehold.co/400" class="size-10 rounded-full object-cover" />
         <p class="text-xs">
           <strong class="block font-medium text-[#ef9a2e]">Administrator</strong>
-          <span> Budi </span>
+          <span> <?=$_SESSION['username'] ?> </span>
         </p>
       </div>
-      <a href="" class="flex items-center hover:bg-[#2d2d2d] p-2 rounded-lg">
+      <a href="?page=logout" class="flex items-center hover:bg-[#2d2d2d] p-2 rounded-lg">
         <i class="text-[1.1rem] bx bx-exit text-red-600"></i>
       </a>
     </div>

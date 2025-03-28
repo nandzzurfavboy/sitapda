@@ -1,0 +1,12 @@
+[
+    {
+        "id": "23",
+        "code": "FBR024",
+        "name": "Fiberglass (Meter)",
+        "m_category_id": "1",
+        "m_unit_id": "3",
+        "price": "110000",
+        "stock": "350",
+        "quantity": 1
+    }
+]
