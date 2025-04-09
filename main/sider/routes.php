@@ -10,101 +10,66 @@ $list_menu = array(
     'label' => 'Dashboard'
   ),
   array(
-    'label' => 'Master',
-    'icon' => '<i class="text-[1.1rem] bx bx-folder-open"></i>',
-    'submenu' => array(      
-      array(
-        'url' => '?page=master-category',
-        'label' => 'Category'
-      ),
-      array(
-        'url' => '?page=master-unit',
-        'label' => 'Unit'
-      ),
-      array(
-        'url' => '?page=master-product',
-        'label' => 'Product'
-      ),
-    )
-  ),
-  array(
-    'url' => '?page=customer-order',
+    'url' => '?page=validasi-skpd',
     'icon' => '<i class="text-[1.1rem] bx bx-archive-in "></i>',
-    'label' => 'Customer Order'
+    'label' => 'Validasi SKPD'
   ),
   array(
-    'url' => '?page=transaction',
+    'url' => '?page=master-upt',
+    'icon' => '<i class="text-[1.1rem] bx bx-archive-in "></i>',
+    'label' => 'UPT'
+  ),
+  array(
+    'url' => '?page=skpd',
     'icon' => '<i class="text-[1.1rem] bx bx-desktop "></i>',
-    'label' => 'Transaction'
+    'label' => 'SKPD'
   ),
   array(
-    'label' => 'Report',
-    'icon' => '<i class="text-[1.1rem] bx bx-bar-chart-square"></i>',
-    'submenu' => array(
-      array(
-        'url' => '?page=report-sales',
-        'label' => 'Sales'
-      ),
-      // array(
-      //   'url' => '?page=stock-in',
-      //   'label' => 'Stock In'
-      // ),
-      // array(
-      //   'url' => '?page=stock-out',
-      //   'label' => 'Stock Out'
-      // )
-    )
+    'url' => '?page=permintaan-skpd',
+    'icon' => '<i class="text-[1.1rem] bx bx-desktop "></i>',
+    'label' => 'Permintaan SKPD'
   ),
-  // array(
-  //   'url' => '?page=manage-user',
-  //   'icon' => '<i class="text-[1.1rem] bx bx-user-check"></i>',
-  //   'label' => 'Manage User'
-  // ),
+  array(
+    'url' => '?page=laporan',
+    'icon' => '<i class="text-[1.1rem] bx bx-desktop "></i>',
+    'label' => 'Laporan'
+  ),
+  array(
+    'url' => '?page=manage-user',
+    'icon' => '<i class="text-[1.1rem] bx bx-user-check"></i>',
+    'label' => 'Manajemen User'
+  ),
 );
 
 $pages = array(
   'dashboard' => 'pages/dashboard/index.php',
-  'master-product' => array(
-    'default' => 'pages/master/product/index.php',
-    'add' => 'pages/master/product/add.php',
-    'edit' => 'pages/master/product/edit.php',
-    'delete' => 'pages/master/product/delete.php'
+  'master-upt' => array(
+    'default' => 'pages/upt/index.php',
+    'add' => 'pages/upt/add.php',
+    'edit' => 'pages/upt/edit.php',
+    'delete' => 'pages/upt/delete.php'
   ),
-  'master-category' => array(
-    'default' => 'pages/master/category/index.php',
-    'add' => 'pages/master/category/add.php',
-    'edit' => 'pages/master/category/edit.php',
-    'delete' => 'pages/master/category/delete.php'
+  'skpd' => array(
+    'default' => 'pages/skpd/index.php',
+    'add' => 'pages/skpd/add.php',
+    'edit' => 'pages/skpd/edit.php',
+    'delete' => 'pages/skpd/delete.php'
   ),
-  'master-unit' => array(
-    'default' => 'pages/master/unit/index.php',
-    'add' => 'pages/master/unit/add.php',
-    'edit' => 'pages/master/unit/edit.php',
-    'delete' => 'pages/master/unit/delete.php'
+  'permintaan-skpd' => array(
+    'default' => 'pages/permintaan-skpd/index.php',
+    'add' => 'pages/permintaan-skpd/add.php',
+    'edit' => 'pages/permintaan-skpd/edit.php',
+    'delete' => 'pages/permintaan-skpd/delete.php'
   ),
-  'customer-order' => array(
-    'default' => 'pages/customer-order/index.php',
-    'process' => 'pages/customer-order/status-order.php',
-    'delete' => 'pages/customer-order/delete.php'
+  'laporan' => array(
+    'default' => 'pages/laporan/index.php',
   ),
-  'transaction' => array(
-    'default' => 'pages/transaction/index.php',
-    'payment-process' => 'pages/transaction/payment-process.php',
+  'manage-user' => array(
+    'default' => 'pages/manage-user/index.php',
+    'add' => 'pages/manage-user/add.php',
+    'edit' => 'pages/manage-user/edit.php',
+    'delete' => 'pages/manage-user/delete.php'
   ),
-  'report-sales' => array(
-    'default' => 'pages/report/sales/index.php',
-  ),
-  // 'stock-in' => array(
-  //   'default' => 'pages/report/stock-in/index.php',
-  // ),
-  // 'stock-out' => array(
-  //   'default' => 'pages/report/stock-out/index.php',
-  // ),
-  // 'manage-user' => array(
-  //   'default' => 'pages/manage-user/index.php',
-  //   'add' => 'pages/manage-user/add.php',
-  //   'edit' => 'pages/manage-user/edit.php'
-  // ),
   'logout' => array(
     'default' => 'pages/logout.php'
   ),
