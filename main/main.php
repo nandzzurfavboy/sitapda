@@ -3,7 +3,7 @@
   <header class="bg-white z-50 min-h-16 flex items-center px-6 w-full sticky top-0 border-b">
     <div class="leading-snug">
       <h3 class="text-base font-bold uppercase">
-        Admin Panel Sistem Pemesanan Toko Bangunan Adi
+        Administrator SITAPDA
       </h3>
       <p class="text-sm text-[#e87918] font-medium"><?= $head_title; ?></p>
     </div>
