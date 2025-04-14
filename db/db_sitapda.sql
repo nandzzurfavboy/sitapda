@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 09, 2025 at 05:00 PM
+-- Generation Time: Apr 14, 2025 at 04:05 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -31,12 +31,12 @@ CREATE TABLE `tb_permintaan_skpd` (
   `id` int NOT NULL,
   `upt_id` int NOT NULL,
   `jumlah_skpd` int NOT NULL,
-  `kasi_lp` enum('BELUM DIVALIDASI','MENUNGGU','TERVALIDASI') COLLATE utf8mb4_general_ci NOT NULL,
-  `pengurus_barang` enum('BELUM DIVALIDASI','MENUNGGU','TERVALIDASI') COLLATE utf8mb4_general_ci NOT NULL,
-  `ktu` enum('BELUM DIVALIDASI','MENUNGGU','TERVALIDASI') COLLATE utf8mb4_general_ci NOT NULL,
-  `kupt` enum('BELUM DIVALIDASI','MENUNGGU','TERVALIDASI') COLLATE utf8mb4_general_ci NOT NULL,
-  `gudang` enum('BELUM DIVALIDASI','MENUNGGU','TERVALIDASI') COLLATE utf8mb4_general_ci NOT NULL,
-  `surat_permintaan` text COLLATE utf8mb4_general_ci NOT NULL,
+  `kasi_lp` enum('BELUM DIVALIDASI','MENUNGGU','TERVALIDASI') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `pengurus_barang` enum('BELUM DIVALIDASI','MENUNGGU','TERVALIDASI') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ktu` enum('BELUM DIVALIDASI','MENUNGGU','TERVALIDASI') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `kupt` enum('BELUM DIVALIDASI','MENUNGGU','TERVALIDASI') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `gudang` enum('BELUM DIVALIDASI','MENUNGGU','TERVALIDASI') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `surat_permintaan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -49,8 +49,8 @@ CREATE TABLE `tb_permintaan_skpd` (
 
 CREATE TABLE `tb_role` (
   `id` int NOT NULL,
-  `nama` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `status` enum('AKTIF','TIDAK AKTIF') COLLATE utf8mb4_general_ci NOT NULL
+  `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `status` enum('AKTIF','TIDAK AKTIF') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -74,17 +74,26 @@ INSERT INTO `tb_role` (`id`, `nama`, `status`) VALUES
 
 CREATE TABLE `tb_skpd` (
   `id` int NOT NULL,
-  `nomor_skpd` int NOT NULL,
-  `nomor_polisi` int NOT NULL,
-  `jenis_proses` int NOT NULL,
+  `nomor_skpd` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `nomor_polisi` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `jenis_proses` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `upt_id` int NOT NULL,
-  `status` enum('DIGUNAKAN','BATAL','RUSAK') COLLATE utf8mb4_general_ci NOT NULL,
+  `status` enum('DIGUNAKAN','BATAL','RUSAK') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `masa_aktif` date NOT NULL,
-  `upload_bukti` text COLLATE utf8mb4_general_ci NOT NULL,
-  `berita_acara` text COLLATE utf8mb4_general_ci NOT NULL,
+  `upload_bukti` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `berita_acara` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_skpd`
+--
+
+INSERT INTO `tb_skpd` (`id`, `nomor_skpd`, `nomor_polisi`, `jenis_proses`, `upt_id`, `status`, `masa_aktif`, `upload_bukti`, `berita_acara`, `createdAt`, `updatedAt`) VALUES
+(3, '11424242', '35255252', 'LAPOR ANTAR TIBA PROVINSI', 1, 'BATAL', '2025-04-16', 'uploads/skpd/images/67fd14aae9496.png', 'uploads/skpd/documents/67fd14aae9fd3.pdf', '2025-04-14 20:59:06', '2025-04-14 22:49:00'),
+(4, '215425', '235252', 'PENGESAHAN', 1, 'DIGUNAKAN', '2025-04-17', 'uploads/skpd/images/67fd2dd0ef0db.png', 'uploads/skpd/documents/67fd2dd0f0388.pdf', '2025-04-14 22:46:24', '2025-04-14 22:52:37'),
+(5, '23525', '32523', 'BBN RUBENTINA', 1, 'DIGUNAKAN', '2025-04-15', 'uploads/skpd/images/67fd2f8539316.png', 'uploads/skpd/documents/67fd2f853a487.pdf', '2025-04-14 22:53:41', '2025-04-14 22:53:41');
 
 -- --------------------------------------------------------
 
@@ -94,9 +103,9 @@ CREATE TABLE `tb_skpd` (
 
 CREATE TABLE `tb_upt` (
   `id` int NOT NULL,
-  `nama` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `alamat` text COLLATE utf8mb4_general_ci NOT NULL,
-  `status` enum('AKTIF','TIDAK AKTIF') COLLATE utf8mb4_general_ci NOT NULL
+  `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `alamat` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `status` enum('AKTIF','TIDAK AKTIF') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -187,7 +196,7 @@ ALTER TABLE `tb_role`
 -- AUTO_INCREMENT for table `tb_skpd`
 --
 ALTER TABLE `tb_skpd`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_upt`
