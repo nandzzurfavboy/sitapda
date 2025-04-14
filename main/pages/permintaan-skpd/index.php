@@ -2,14 +2,14 @@
 $get_url = $_GET['page'];
 $getUser = getData(
     "tb_permintaan_skpd",
-    "*",
+    "tb_permintaan_skpd.*, tb_upt.nama as upt_nama",
+    "JOIN tb_upt ON tb_permintaan_skpd.upt_id = tb_upt.id",
     "",
-    "",
-    "tb_permintaan_skpd.id DESC"
+    "tb_permintaan_skpd.createdAt DESC"
 );
 
 $columns = array(
-    'upt_id' => 'UPT',
+    'upt_nama' => 'UPT',
     'jumlah_skpd' => 'Jumlah SKPD',
     'kasi_lp' => 'Kasi Lp 1 ',
     'pengurus_barang' => 'Pengurus Barang',

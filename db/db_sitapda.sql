@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 14, 2025 at 04:05 PM
+-- Generation Time: Apr 14, 2025 at 04:51 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -41,6 +41,13 @@ CREATE TABLE `tb_permintaan_skpd` (
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tb_permintaan_skpd`
+--
+
+INSERT INTO `tb_permintaan_skpd` (`id`, `upt_id`, `jumlah_skpd`, `kasi_lp`, `pengurus_barang`, `ktu`, `kupt`, `gudang`, `surat_permintaan`, `createdAt`, `updatedAt`) VALUES
+(2, 1, 10, 'MENUNGGU', 'BELUM DIVALIDASI', 'BELUM DIVALIDASI', 'BELUM DIVALIDASI', 'BELUM DIVALIDASI', 'uploads/permintaan-skpd/documents/67fd3b736b92f.pdf', '2025-04-14 23:44:35', '2025-04-14 23:44:35');
+
 -- --------------------------------------------------------
 
 --
@@ -75,8 +82,8 @@ INSERT INTO `tb_role` (`id`, `nama`, `status`) VALUES
 CREATE TABLE `tb_skpd` (
   `id` int NOT NULL,
   `nomor_skpd` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `nomor_polisi` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `jenis_proses` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `nomor_polisi` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `jenis_proses` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `upt_id` int NOT NULL,
   `status` enum('DIGUNAKAN','BATAL','RUSAK') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `masa_aktif` date NOT NULL,
@@ -184,7 +191,7 @@ ALTER TABLE `tb_user`
 -- AUTO_INCREMENT for table `tb_permintaan_skpd`
 --
 ALTER TABLE `tb_permintaan_skpd`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tb_role`
