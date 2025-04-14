@@ -9,10 +9,14 @@ $getUPT = getData(
 );
 
 $columns = array(
-    'nama' => 'Name',
-    'alamat' => 'Address',
+    'nomor_skpd' => 'Nomor SKPD',
+    'nomor_polisi' => 'Nomor Polisi',
     'status' => 'Status',
+    'masa_aktif' => 'Masa Aktif',
+    'upload_bukti' => 'Upload Bukti',
+    'berita_acara' => 'Berita Acara',
 );
+$imageColumns = ['upload_bukti', 'berita_acara'];
 
 ?>
 <div class="border rounded-xl">
@@ -25,6 +29,6 @@ $columns = array(
     </div>
     <hr>
     <div class="p-6">
-        <?= baseTable($getUPT, $columns, $get_url)  ?>
+        <?= baseTable($getUPT, $columns, $get_url, $imageColumns)  ?>
     </div>
 </div>

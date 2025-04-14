@@ -1,19 +1,25 @@
 <?php
-// components
 require '../components/input/input.php';
 require '../components/textarea/textarea.php';
 require '../components/select/select.php';
 require '../components/date/date.php';
-require '../components/upload/upload.php';
+require '../components/upload/file-upload.php';
 
-// data dropdown
 $StatusProc = [
     ['value' => 'DIGUNAKAN', 'label' => 'DIGUNAKAN'],
     ['value' => 'BATAL', 'label' => 'BATAL'],
     ['value' => 'RUSAK', 'label' => 'RUSAK']
 ];
 
-// ambil data UPT dari DB
+$JenisProses = [
+    ['value' => 'GANTI STNK', 'label' => 'GANTI STNK'],
+    ['value' => 'BBN RUBENTINA', 'label' => 'BBN RUBENTINA'],
+    ['value' => 'PENGESAHAN', 'label' => 'PENGESAHAN'],
+    ['value' => 'FISKAL', 'label' => 'FISKAL'],
+    ['value' => 'KENDARAAN BARU', 'label' => 'KENDARAAN BARU'],
+    ['value' => 'LAPOR ANTAR TIBA PROVINSI', 'label' => 'LAPOR ANTAR TIBA PROVINSI'],
+];
+
 $listUPT = getData('tb_upt');
 ?>
 
@@ -28,16 +34,28 @@ $listUPT = getData('tb_upt');
                 <?= baseInput('Nomor SKPD', 'nomor_skpd', true, 'text', '', 'Enter SKPD Number', 'off') ?>
                 <?= baseInput('Nomor Polisi', 'nomor_polisi', true, 'text', '', 'Enter Police Number', 'off') ?>
                 <?= baseSelect('UPT', 'upt_id', $listUPT, 'id', 'nama', 'Select UPT', '', true) ?>
-                <?= baseSelect('Status', 'status', $StatusProc, 'value', 'label', 'Pilih Jenis Proses', 'DIGUNAKAN', true); ?>
+                <?= baseSelect('Jenis Proses', 'jenis_proses', $JenisProses, 'value', 'label', 'Pilih Jenis Proses', 'DIGUNAKAN', true); ?>
+                <?= baseSelect('Status', 'status', $StatusProc, 'value', 'label', 'Status', 'DIGUNAKAN', true); ?>
                 <?= baseDate('Tanggal Masa Aktif', 'masa_aktif', true, 'Select Date') ?>
-                <?= baseUpload('Upload Foto Bukti', 'upload_bukti', true, 'image/jpeg,image/png', '2MB') ?>
-                <?= baseUpload('Upload Berita Acara', 'berita_acara', false, '.pdf', '5MB') ?>
-
+                <?= baseFileUpload(
+                    'Foto UPT',
+                    'upload_bukti',
+                    false,
+                    ['image/png', 'image/jpeg'],
+                    2097152
+                ) ?>
+                <?= baseFileUpload(
+                    'Berita Acara',
+                    'berita_acara',
+                    false,
+                    ['application/pdf'],
+                    2097152
+                ) ?>
                 <div class="flex items-center gap-2">
                     <button type="submit" class="text-center py-2 px-6 inline-flex items-center gap-x-1 text-xs font-semibold rounded-lg border border-transparent bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 disabled:pointer-events-none transition-all">
                         <span>Submit</span>
                     </button>
-                    <a href="?page=permintaan-skpd" class="text-center py-2 px-6 inline-flex items-center gap-x-1 text-xs font-semibold rounded-lg border border-transparent bg-gray-200 text-gray-500 hover:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none transition-all">
+                    <a href="?page=skpd" class="text-center py-2 px-6 inline-flex items-center gap-x-1 text-xs font-semibold rounded-lg border border-transparent bg-gray-200 text-gray-500 hover:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none transition-all">
                         Cancel
                     </a>
                 </div>
@@ -45,49 +63,54 @@ $listUPT = getData('tb_upt');
         </form>
     </div>
 </div>
-
 <?php
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Simpan file upload foto bukti
-    $fotoBuktiPath = null;
-    if (isset($_FILES['upload_bukti']) && $_FILES['upload_bukti']['error'] == 0) {
-        $targetDir = '../uploads/';
-        $fotoBuktiPath = $targetDir . basename($_FILES['upload_bukti']['name']);
-        move_uploaded_file($_FILES['upload_bukti']['tmp_name'], $fotoBuktiPath);
-    }
 
-    // Simpan file dokumen
-    $documentPath = null;
-    if (isset($_FILES['berita_acara']) && $_FILES['berita_acara']['error'] == 0) {
-        $targetDir = '../db/uploads/';
-        $documentPath = $targetDir . basename($_FILES['berita_acara']['name']);
-        move_uploaded_file($_FILES['berita_acara']['tmp_name'], $documentPath);
+    $uploadBuktiPath = 'skpd/images';
+    if (!file_exists($uploadBuktiPath)) {
+        mkdir($uploadBuktiPath, 0777, true);
     }
+    $fileUploadBukti = processFileUpload('upload_bukti', $uploadBuktiPath);
 
-    // Siapkan data untuk simpan ke DB
+    $uploadBeritaAcaraPath = 'skpd/documents';
+    if (!file_exists($uploadBeritaAcaraPath)) {
+        mkdir($uploadBeritaAcaraPath, 0777, true);
+    }
+    $fileUploadBeritaAcara = processFileUpload('berita_acara', $uploadBeritaAcaraPath);
+
+
     $data = [
         'nomor_skpd' => $_POST['nomor_skpd'],
         'nomor_polisi' => $_POST['nomor_polisi'],
-        'upt_id' => $_POST['upt_id'],
+        'upt_id ' => $_POST['upt_id'],
+        'jenis_proses' => $_POST['jenis_proses'],
         'status' => $_POST['status'],
         'masa_aktif' => $_POST['masa_aktif'],
-        'upload_bukti' => $fotoBuktiPath,
-        'berita_acara' => $documentPath,
         'createdAt' => date('Y-m-d H:i:s'),
         'updatedAt' => date('Y-m-d H:i:s'),
     ];
 
-    $createData = createData('tb_permintaan_skpd', $data);
+    if (isset($fileUploadBukti) && $fileUploadBukti['success']) {
+        $data['upload_bukti'] = $fileUploadBukti['filePath'];
+    }
+
+    if (isset($fileUploadBeritaAcara) && $fileUploadBeritaAcara['success']) {
+        $data['berita_acara'] = $fileUploadBeritaAcara['filePath'];
+    }
+
+    $createData = createData('tb_skpd', $data);
 
     if ($createData) {
         echo "<script>
             alert('Success to create SKPD');
             document.location.href='index.php?page=skpd';
-        </script>";
+          </script>";
     } else {
         echo "<script>
             alert('Failed to create SKPD');
-        </script>";
+          </script>";
     }
 }
+
 ?>
